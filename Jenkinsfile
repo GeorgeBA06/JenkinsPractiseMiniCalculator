@@ -34,6 +34,18 @@ pipeline{
                 )
             }
         }
+
+         stage('Deploy') {
+                    steps {
+                        bat '''
+                            if not exist "C:\\jenkins-deploy\\mini-calculator" mkdir "C:\\jenkins-deploy\\mini-calculator"
+
+                            copy /Y "target\\mini-calculator-1.0.0.jar" "C:\\jenkins-deploy\\mini-calculator\\mini-calculator.jar"
+                        '''
+
+                        bat 'java -jar "C:\\jenkins-deploy\\mini-calculator\\mini-calculator.jar"'
+                    }
+                }
     }
 
     post{
